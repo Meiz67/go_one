@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  go:
+    build: ./
+    volumes:
+      - ./db:/app/db
+    networks:
+      - go_network
+    ports:
+      - "8000:8000"
+      - "8040:8040"
+    depends_on:
+      - postgres
+    environment:
+      - DB_PASSWORD=root
+      - DB_URL=postgres://postgres:root@postgres/postgres?sslmode=disable
+
+  postgres:
+    image: postgres:latest
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    networks:
+      - go_network
+    environment:
+      - DB_URL=postgres://postgres:root@postgres/postgres?sslmode=disable
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "5432:5432"
+
+
+networks:
+  go_network:
+    driver: bridge
+    external: true
