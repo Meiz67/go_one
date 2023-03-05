@@ -1,1 +1,1 @@
-CREATE TABLE IF NOT EXISTS clients (id int, name varchar, lastName varchar, phone varchar not null, email varchar);
+CREATE TABLE IF NOT EXISTS clients (id serial, name varchar, lastName varchar, phone varchar not null, email varchar);
