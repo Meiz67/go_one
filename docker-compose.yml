@@ -3,10 +3,11 @@ version: '3'
 services:
   go:
     build: ./
+    container_name: go_api
     volumes:
-      - ./db:/app/db
+      - ./:/app
     networks:
-      - go_network
+      - go_api_network
     ports:
       - "8000:8000"
       - "8040:8040"
@@ -21,7 +22,7 @@ services:
     volumes:
       - ./postgres:/var/lib/postgresql/data
     networks:
-      - go_network
+      - go_api_network
     environment:
       - DB_URL=postgres://postgres:root@postgres/postgres?sslmode=disable
       - POSTGRES_PASSWORD=root
@@ -30,6 +31,6 @@ services:
 
 
 networks:
-  go_network:
+  go_api_network:
     driver: bridge
     external: true
